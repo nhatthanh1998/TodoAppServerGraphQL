@@ -1,0 +1,12 @@
+#import * from 'type.graphql'
+#import * from '../scalar/type.graphql'
+type Query {
+    todo(_id:MongoID):Todo,
+    todos(criteria:TodoInput = {},skip:Int,limit:Int): [Todo]
+}
+
+type Mutation {
+    addTodo(todo:TodoInput):Todo,
+    updateTodo(todo:TodoInput):Todo,
+    deleteTodo(todoID:MongoID,token:String):Todo
+}

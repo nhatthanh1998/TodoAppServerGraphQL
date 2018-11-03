@@ -1,0 +1,17 @@
+#import User from '../users/type.graphql'
+#import * from '../scalar/type.graphql'
+type Todo {
+    _id:MongoID
+    name:String!,
+    author:User!,
+    createdAt:Long,
+    finish:Boolean
+}
+
+input TodoInput {
+    _id:MongoID,
+    name:String,
+    createdAt:Long,
+    finish:Boolean,
+    token:String
+}

@@ -1,0 +1,28 @@
+#import * from '../scalar/type.graphql'
+#import * from '../todos/type.graphql'
+type User {
+    _id:MongoID,
+    username:String,
+    displayName:String,
+    todos:[Todo],
+    createdAt:Long,
+    token:String,
+}
+input UserQueryInput {
+    _id:MongoID,
+    displayName:String,
+    createdAt:Long,
+    token:String,
+}
+input UserLoginInput {
+    username:String,
+    password:String
+}
+
+input UserMutationInput {
+    username:String,
+    displayName:String,
+    password:String,
+    _id:MongoID,
+    token:String
+}

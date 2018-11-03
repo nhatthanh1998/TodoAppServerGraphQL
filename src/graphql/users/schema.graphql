@@ -1,0 +1,9 @@
+#import * from './type.graphql'
+type Query {
+    user(where:UserQueryInput):User
+}
+type Mutation {
+    registerUser(userInput:UserMutationInput):String,
+    updateUser(userInput:UserMutationInput):User,
+    Login(loginInput:UserLoginInput):String
+}
