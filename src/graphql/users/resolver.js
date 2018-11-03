@@ -19,12 +19,13 @@ async function modifyUserInput(input) {
 
 
 export const Query = {
-    async user(_, agrs, context) {
-        console.log(context)
-        return await User
-            .findByID(context.user._id)
-            .populate('todos')
-            .lean()
+    async user(_,{token}) {
+        var parseUser = await User.parseToken(token)
+        if(parseUser.error){
+            throw new Error("Invalid token")
+        }else{
+            return await User.findById(parseUser._id).populate('todos').lean()
+        }
     }
 }
 

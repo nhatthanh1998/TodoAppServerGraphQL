@@ -35,7 +35,7 @@ UserSchema.methods.generateToken = function () {
     let token = jwt.sign({
         username: user.username,
         createdAt: user.createdAt,
-        _id:user._id
+        _id: user._id
     }, SECRECT)
     user.token = token
 }
@@ -68,12 +68,10 @@ UserSchema.statics.parseToken = async function (token) {
     try {
         var decoded = await jwt.verify(token, SECRECT)
         return decoded
-      } catch(err) {
-        return {"error":"Invalid token"}
-      }
+    } catch (err) {
+        return { "error": "Invalid token" }
+    }
 }
-
-
 UserSchema.statics.generatePassword = async function (password) {
     let salt = await bcrypt.genSalt(10)
     var newPassword = await bcrypt.hash(password, salt)

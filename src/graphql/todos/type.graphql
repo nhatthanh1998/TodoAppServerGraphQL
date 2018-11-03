@@ -2,8 +2,8 @@
 #import * from '../scalar/type.graphql'
 type Todo {
     _id:MongoID
-    name:String!,
-    author:User!,
+    name:String,
+    author:User,
     createdAt:Long,
     finish:Boolean
 }

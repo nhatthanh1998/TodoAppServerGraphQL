@@ -1,6 +1,7 @@
 import { Todo } from '../../models/Todo'
 import { User } from '../../models/User'
 import 'babel-polyfill'
+import mongoose from 'mongoose';
 function modifyCriteria(criteria) {
     var modifiedCriteria = {}
     if (criteria._id) {
@@ -24,10 +25,10 @@ function modifyCriteria(criteria) {
     if (criteria.createdAt) {
         modifiedCriteria = {
             ...modifiedCriteria,
-            createddAt: criteria.createdAt
+            createdAt: criteria.createdAt
         }
     }
-    if (criteria.finish) {
+    if (criteria.finish !== null) {
         modifiedCriteria = {
             ...modifiedCriteria,
             finish: criteria.finish
@@ -60,7 +61,6 @@ export const Query = {
     }
 }
 
-
 export const Mutation = {
     async addTodo(_, { todo }) {
         if (todo.token) {
@@ -69,11 +69,14 @@ export const Mutation = {
                 throw new Error("Invalid token")
             }
             todo.author = parseUser._id
-            var newTodo = Todo.create(...todo)
+            todo._id = new mongoose.Types.ObjectId().toString()
+            todo.createdAt = new Date().getTime()
+            todo.finish = false
+            var newTodo = await Todo.create({...modifyCriteria(todo)})
             var user = await User.findById(todo.author)
             user.todos.push(newTodo)
             await user.save()
-            return newTodo
+            return await User.findById(todo._id).populate('author')
 
         } else {
             throw new Error("Not Login")
